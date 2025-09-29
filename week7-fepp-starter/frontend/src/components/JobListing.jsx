@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 const JobListing = ({job}) => {
 
@@ -8,6 +9,7 @@ const JobListing = ({job}) => {
         <p>Type: {job.type}</p>
         <p>Description: {job.description}</p>
         <p>Company: {job.company.name}</p>
+        <Link to={`/jobs/${job.id}`}>View Job</Link>
     </div>
   );
 };
