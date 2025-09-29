@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import EditJobPage from './EditJobPage';
 
 
 const JobPage = () => {
@@ -59,6 +60,7 @@ useEffect(()=>{
         <p>Email: {job.company.contactEmail}</p>
         <p>Phone: {job.company.contactPhone}</p>
         <button onClick={deleteJob}>Delete Job</button>
+        <button onClick={() => navigate(`/edit-job/${id}`) }>Edit Job</button>
     </div>
   )
 }
