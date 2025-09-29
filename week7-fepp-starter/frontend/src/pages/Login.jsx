@@ -14,20 +14,16 @@ const Login = () => {
         e.preventDefault();
 
     
-    await login ({
+    const result = await login ({
         email: email.value,
         password: password.value
     });
-    if(!error){
-        console.log("Login success");
-        navigate("/");
-        //console.log("error is:",error);
-        
-    
-        
-    }else{
-        console.log("Login Failed", error)
-    }
+ if (result.success) {
+    console.log("Login success");
+    navigate("/");
+  } else {
+    console.log("Login failed:", result.error);
+  }
 };
 
     

@@ -10,16 +10,29 @@ const AddJobPage = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
+
+  const user= JSON.parse(localStorage.getItem("user"));
+  const token = user? user.token: null;
+
   const navigate = useNavigate();
   
-    const submitForm = (e) => {
+    const submitForm = async(e) => {
       e.preventDefault();
+
+      const newJob= { title, type, description, company :{
+        name: company,
+        contactEmail: email,
+        contactPhone: phone
+      }}
       //console.log("submitForm called");
       //return;
-            const addJob = async (job) => {
-      const response = await fetch('/api/jobs', 
+      const addJob = async (job) => {
+        const response = await fetch('/api/jobs', 
         {method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(job)
       });
       if (response.ok) {
@@ -27,17 +40,12 @@ const AddJobPage = () => {
         navigate("/");
         
   } else{
-    console.error("Error adding job", error);
+    console.log("Error adding job");
   }
 
     }
-    const newJob= { title, type, description, company :{
-      name: company,
-      contactEmail: email,
-      contactPhone: phone
-    }}
     
-    addJob(newJob);
+    await addJob(newJob);
     console.log(newJob);
     
     };
