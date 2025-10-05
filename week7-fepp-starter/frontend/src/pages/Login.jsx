@@ -1,0 +1,47 @@
+import React, { useState } from 'react'
+import useField from '../hooks/useField';
+import useLogin from '../hooks/useLogin';
+import { useNavigate } from 'react-router-dom';
+
+const Login = () => {
+  const email = useField("email");
+  const password = useField("password");
+  const navigate = useNavigate();
+
+    const{login, error} = useLogin("/api/users/login");
+
+    const handleFormSubmit = async(e)=>{
+        e.preventDefault();
+
+    
+    const result = await login ({
+        email: email.value,
+        password: password.value
+    });
+ if (result.success) {
+    console.log("Login success");
+    navigate("/");
+  } else {
+    console.log("Login failed:", result.error);
+  }
+};
+
+    
+  return (
+    <div className='login'>
+        <h2>Log In</h2>
+        <form onSubmit={handleFormSubmit}>
+            <label>Email: </label>
+            <input {...email}/>
+            <br/>
+            <br/>
+            <label>Password: </label>
+            <input {...password} />
+            <br/>
+            <button>Log in</button>
+        </form>
+    </div>
+  )
+}
+
+export default Login;

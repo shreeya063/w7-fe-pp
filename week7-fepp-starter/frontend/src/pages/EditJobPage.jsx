@@ -14,13 +14,17 @@ const EditJobPage = () => {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
 
+    const user= JSON.parse(localStorage.getItem("user"));
+  const token = user? user.token: null;
+
     const updateJob= async (job) =>{
         try{
             const res = await fetch(`/api/jobs/${id}`,{
                 method:"PUT",
-                headers:{
-                    "Content-Type": "application/json",
-                },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
                 body: JSON.stringify(job),
             });
             if (!res.ok){ 
